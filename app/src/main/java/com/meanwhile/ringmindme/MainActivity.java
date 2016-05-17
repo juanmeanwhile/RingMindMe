@@ -15,6 +15,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQ_GET_TIME_DATE = 1000;
     private CompactCalendarView mCalendar;
 
     @Override
@@ -24,6 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         mCalendar = (CompactCalendarView) findViewById(R.id.cal);
 
-
+        startActivityForResult(IntroActivity.newIntent(this), REQ_GET_TIME_DATE);
     }
 }

@@ -3,4 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello">Hi!</string>
+    <string name="intro_text">I\'ll help you to remember when to put or remove your birth control birth</string>
+    <string name="chooser_hint">Do you got the ring currently in?</string>
+    <string name="switch_inout_yes">Yes</string>
+    <string name="switch_inout_no">No</string>
 </resources>

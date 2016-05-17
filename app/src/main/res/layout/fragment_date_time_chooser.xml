@@ -5,8 +5,6 @@
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
                                             tools:context="com.meanwhile.ringmindme.DateTimeChooserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +32,7 @@
         android:id="@+id/cal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         app:compactCalendarBackgroundColor="#ffe95451"
         app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
         app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
