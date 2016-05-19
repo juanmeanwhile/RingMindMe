@@ -1,0 +1,28 @@
+{
+  "documentation": "An action to be performed by th euser",
+  "fields": [
+    {
+      "name": "action",
+      "type": "enum",
+      "enumName": "actionKind",
+      "enumValues": [
+        "TAKE",
+        "REMOVE"
+      ],
+      "nullable": false
+    },
+    {
+      "documentation": "Date when the action has to be performed",
+      "name": "date",
+      "type": "Date",
+      "nullable": false
+    }
+  ],
+
+  "constraints": [
+    {
+      "name": "unique_name",
+      "definition": "UNIQUE (first_name, last_name) ON CONFLICT REPLACE"
+    }
+  ]
+}

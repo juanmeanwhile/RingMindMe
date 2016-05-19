@@ -27,7 +27,6 @@
         </LinearLayout>
     </FrameLayout>
 
-
     <com.github.sundeepk.compactcalendarview.CompactCalendarView
         android:id="@+id/cal"
         android:layout_width="wrap_content"
@@ -41,5 +40,17 @@
         app:layout_heightPercent="50%"
         />
 
+    <!--<CalendarView-->
+        <!--android:id="@+id/cal"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--app:compactCalendarBackgroundColor="#ffe95451"-->
+        <!--app:compactCalendarCurrentDayBackgroundColor="#B71C1C"-->
+        <!--app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"-->
+        <!--app:compactCalendarTextColor="#fff"-->
+        <!--app:compactCalendarTextSize="12sp"-->
+        <!--app:layout_heightPercent="50%"-->
+        <!--/>-->
 
 </android.support.percent.PercentFrameLayout>

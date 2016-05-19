@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,18 +30,36 @@ import java.util.Date;
 public class DateTimeChooserFragment extends Fragment {
 
 
+    private static final String ARG_RING_INSIDE = "RingInside";
     private OnDateTimeFragmentListener mListener;
     private CompactCalendarView mCalendarView;
     private Button mTimeButton;
-
     private Calendar mSelectedCal;
+    private TextView mQuestion;
+    private SimpleDateFormat mDf;
+    private boolean mRingInside;
+
+    private TimePickerDialog.OnTimeSetListener mTimeChangeListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            cal.set(Calendar.MINUTE, minute);
+            cal.set(Calendar.SECOND, second);
+
+            mListener.onDateTimeSelected(cal.getTime());
+            
+            mTimeButton.setText(mDf.format(cal.getTime()));
+        }
+    };
 
     public DateTimeChooserFragment() {
     }
 
-    public static DateTimeChooserFragment newInstance() {
+    public static DateTimeChooserFragment newInstance(boolean ringIn) {
         DateTimeChooserFragment fragment = new DateTimeChooserFragment();
         Bundle args = new Bundle();
+        args.putBoolean(ARG_RING_INSIDE, ringIn);
 
         fragment.setArguments(args);
         return fragment;
@@ -48,7 +69,10 @@ public class DateTimeChooserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            mRingInside = getArguments().getBoolean(ARG_RING_INSIDE);
         }
+
+        mDf = new SimpleDateFormat("HH:mm");
     }
 
     @Override
@@ -57,10 +81,25 @@ public class DateTimeChooserFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_date_time_chooser, container, false);
 
         mSelectedCal = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+
+        mQuestion = (TextView) v.findViewById(R.id.question);
+        mQuestion.setText(mRingInside?R.string.datetime_picker_ring_put: R.string.datetime_picker_ring_take_out);
 
         mTimeButton = (Button) v.findViewById(R.id.time_button);
-        mTimeButton.setText(df.format(mSelectedCal.getTime()));
+        mTimeButton.setText(mDf.format(mSelectedCal.getTime()));
+        mTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog dpd = TimePickerDialog.newInstance(
+                        mTimeChangeListener,
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.SECOND),
+                        true
+                );
+                dpd.show(getActivity().getFragmentManager(), "TimePickerDialog");
+            }
+        });
 
         mCalendarView = (CompactCalendarView) v.findViewById(R.id.cal);
         mCalendarView.setCurrentDate(mSelectedCal.getTime());
@@ -84,9 +123,6 @@ public class DateTimeChooserFragment extends Fragment {
         mListener = null;
     }
 
-    public Date getSelectedTime(){
-        return mSelectedCal.getTime();
-    }
 
     /**
      * This interface must be implemented by activities that contain this

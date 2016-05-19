@@ -8,4 +8,7 @@
     <string name="chooser_hint">Do you got the ring currently in?</string>
     <string name="switch_inout_yes">Yes</string>
     <string name="switch_inout_no">No</string>
+    <string name="hour_format">%1$.2:%2$.2d</string>
+    <string name="datetime_picker_ring_put">When did you put the ring in?</string>
+    <string name="datetime_picker_ring_take_out">When did you take the ring out?</string>
 </resources>

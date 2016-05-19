@@ -21,9 +21,11 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
     private InkPageIndicator mIndicator;
     private ViewPager mPager;
     private FloatingActionButton mNextButton;
-    private boolean mIn;
 
+    private boolean mNeedToGoToLast = true;
+    private boolean mRingInside;
     private Date mSelectedDate;
+
 
     public static Intent newIntent(Context context) {
         return new Intent(context, IntroActivity.class);
@@ -35,48 +37,90 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
         setContentView(R.layout.activity_intro);
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new IntroPagerAdapter(getSupportFragmentManager()));
+        mPager.setAdapter(new IntroPagerAdapter(false, getSupportFragmentManager()));
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mNeedToGoToLast = position != 2;
+                toogleFab(true);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         mIndicator = (InkPageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
 
         mNextButton = (FloatingActionButton) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
+                if (mSelectedDate != null && !mNeedToGoToLast) {
+                    endIntro();
+                }
                 if (mPager.getCurrentItem() < 2) {
                     //move to next
-
-                } else  if (mPager.getCurrentItem() == 2){
-                    //move to next
-
-                    //animate FAB to check state
-                } else {
-                    //ge got what we need, return date as result and finish
-                    Intent intent = new Intent();
-                    intent.putExtra(RET_SELECTED_TIMEDATE, mSelectedDate);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    mPager.setCurrentItem(mPager.getCurrentItem()+1);
                 }
-
-                mPager.setCurrentItem(mPager.getCurrentItem()+1);
             }
         });
+
+    }
+
+    private void endIntro() {
+        //init db
+
+        //finish activity
+        //ge got what we need, return date as result and finish
+        Intent intent = new Intent();
+        intent.putExtra(RET_SELECTED_TIMEDATE, mSelectedDate);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
     public void onDateTimeSelected(Date date) {
         mSelectedDate = date;
+
+        toogleFab(true);
     }
 
     @Override
-    public void onSelectionMade(boolean alreadyIn) {
-        mIn = alreadyIn;
+    public void onSelectionMade(boolean ringInside) {
+        mRingInside = ringInside;
+        mNeedToGoToLast = true;
+
+        //turn FAB into next state
+        toogleFab(false);
     }
 
+    private void toogleFab(boolean finishMode) {
+        //TODO
+    }
+
+
     private class IntroPagerAdapter extends FragmentPagerAdapter {
-        public IntroPagerAdapter(FragmentManager fm) {
+        public IntroPagerAdapter(boolean ringIn, FragmentManager fm) {
             super(fm);
+            this.ringIn = ringIn;
+        }
+
+        private boolean ringIn;
+
+        public void setRingInside(boolean ringInside) {
+            ringIn = ringInside;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -87,8 +131,17 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
                 case 1:
                     return new ChooserFragment();
                 default:
-                    return DateTimeChooserFragment.newInstance();
+                    return DateTimeChooserFragment.newInstance(ringIn);
             }
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            if (object instanceof DateTimeChooserFragment) {
+                //recreate fragment with the new value
+                return POSITION_NONE;
+            }
+            return super.getItemPosition(object);
         }
 
         @Override

@@ -1,0 +1,13 @@
+{
+  "syntaxVersion": 3,
+  "projectPackageId": "com.meanwhile.ringmindme",
+  "authority": "com.meanwhile.ringmindme.provider",
+  "providerJavaPackage": "com.meanwhile.ringmindme.provider",
+  "providerClassName": "ActionProvider",
+  "sqliteOpenHelperClassName": "MySQLiteOpenHelper",
+  "sqliteOpenHelperCallbacksClassName": "MySQLiteOpenHelperCallbacks",
+  "databaseFileName": "ringmind.db",
+  "databaseVersion": 1,
+  "enableForeignKeys": false,
+  "useAnnotations": true
+}
