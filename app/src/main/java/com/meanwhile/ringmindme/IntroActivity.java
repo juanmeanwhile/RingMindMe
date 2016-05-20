@@ -1,5 +1,6 @@
 package com.meanwhile.ringmindme;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -9,15 +10,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.meanwhile.ringmindme.provider.action.ActionColumns;
+import com.meanwhile.ringmindme.provider.action.ActionContentValues;
+import com.meanwhile.ringmindme.provider.action.actionKind;
 import com.pixelcan.inkpageindicator.InkPageIndicator;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class IntroActivity extends AppCompatActivity implements DateTimeChooserFragment.OnDateTimeFragmentListener, ChooserFragment.OnChooserFragmentListener {
 
     private static final String RET_SELECTED_TIMEDATE = "selectedDate";
+    private static final String TAG = "IntroActivity";
     private InkPageIndicator mIndicator;
     private ViewPager mPager;
     private FloatingActionButton mNextButton;
@@ -79,7 +86,23 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
     }
 
     private void endIntro() {
+        boolean take = mRingInside;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(mSelectedDate);
+        cal.getTime();
+
         //init db
+        Log.d(TAG, "inserting entries in the database");
+        for (int i = 0; i < 20 ; i ++) {
+
+            cal.add(Calendar.DAY_OF_YEAR, take?3:20);
+            ActionContentValues values = new ActionContentValues();
+            values.putAction(take?actionKind.TAKE:actionKind.REMOVE);
+            values.putDate(cal.getTime());
+            getContentResolver().insert(ActionColumns.CONTENT_URI, values.values());
+
+            take = !take;
+        }
 
         //finish activity
         //ge got what we need, return date as result and finish
