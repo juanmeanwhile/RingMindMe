@@ -31,4 +31,5 @@ dependencies {
     compile 'com.github.sundeepk:compact-calendar-view:1.8.3'
     compile 'com.pacioianu.david:ink-page-indicator:1.1.1'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
+    compile 'com.github.ZieIony:NaturalDateFormat:809529caef'
 }

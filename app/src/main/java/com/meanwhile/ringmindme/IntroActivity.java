@@ -1,5 +1,7 @@
 package com.meanwhile.ringmindme;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -91,9 +93,11 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
         cal.setTime(mSelectedDate);
         cal.getTime();
 
+        long firstAlarm = 0;
+
         //init db
         Log.d(TAG, "inserting entries in the database");
-        for (int i = 0; i < 20 ; i ++) {
+        for (int i = 0; i < 20 ; i++) {
 
             cal.add(Calendar.DAY_OF_YEAR, take?3:20);
             ActionContentValues values = new ActionContentValues();
@@ -102,7 +106,14 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
             getContentResolver().insert(ActionColumns.CONTENT_URI, values.values());
 
             take = !take;
+
+            if (i == 0) {
+                firstAlarm = cal.getTimeInMillis();
+            }
         }
+
+
+
 
         //finish activity
         //ge got what we need, return date as result and finish

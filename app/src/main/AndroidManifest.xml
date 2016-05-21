@@ -22,6 +22,17 @@
             android:name="com.meanwhile.ringmindme.provider.ActionProvider"
             android:authorities="com.meanwhile.ringmindme.provider"
             android:exported="false" />
+
+        <receiver android:name="alarm.AlarmReceiver"></receiver>
+
+        <receiver android:name=".alarm.BootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
     </application>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
 </manifest>
