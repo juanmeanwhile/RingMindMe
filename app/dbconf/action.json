@@ -1,5 +1,5 @@
 {
-  "documentation": "An action to be performed by th euser",
+  "documentation": "An action to be performed by the user",
   "fields": [
     {
       "name": "action",
@@ -7,7 +7,7 @@
       "enumName": "actionKind",
       "enumValues": [
         "TAKE",
-        "REMOVE"
+        "PUT"
       ],
       "nullable": false
     },
@@ -16,6 +16,13 @@
       "name": "date",
       "type": "Date",
       "nullable": false
+    },
+    {
+      "documentation": "If the action has been already performed",
+      "name": "ready",
+      "type": "Boolean",
+      "nullable": false,
+      "index":true
     }
   ]
 

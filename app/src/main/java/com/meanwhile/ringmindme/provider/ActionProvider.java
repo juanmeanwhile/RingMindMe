@@ -116,9 +116,9 @@ public class ActionProvider extends BaseContentProvider {
         }
         if (id != null) {
             if (selection != null) {
-                res.selection = res.table + "." + res.idColumn + "=" + id + " and (" + selection + ")";
+                res.selection = res.table + "build/intermediates/exploded-aar/com.pacioianu.david/ink-page-indicator/1.1.1/res" + res.idColumn + "=" + id + " and (" + selection + ")";
             } else {
-                res.selection = res.table + "." + res.idColumn + "=" + id;
+                res.selection = res.table + "build/intermediates/exploded-aar/com.pacioianu.david/ink-page-indicator/1.1.1/res" + res.idColumn + "=" + id;
             }
         } else {
             res.selection = selection;

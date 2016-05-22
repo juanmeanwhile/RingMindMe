@@ -20,6 +20,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.meanwhile.ringmindme.alarm.AlarmHelper;
 import com.meanwhile.ringmindme.provider.action.ActionColumns;
+import com.meanwhile.ringmindme.provider.action.ActionContentValues;
 import com.meanwhile.ringmindme.provider.action.ActionCursor;
 import com.meanwhile.ringmindme.provider.action.ActionSelection;
 import com.meanwhile.ringmindme.provider.action.actionKind;
@@ -35,11 +36,13 @@ import tk.zielony.naturaldateformat.RelativeDateFormat;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQ_GET_TIME_DATE = 1000;
+    private static final long ONE_DAY = 24 * 3600 * 1000;
     private CalendarView mCalendar;
     private TextView mActionText;
     private TextView mTimeText;
     private Button mDoneInTimeButton;
     private Button mDoneOutOfTimeButton;
+    private long mCurrentActionId;
     private int mColorPut = Color.BLUE;
     private int mColorTake = Color.YELLOW;
 
@@ -67,14 +70,43 @@ public class MainActivity extends AppCompatActivity {
         mDoneInTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlarmHelper.setNextAlarm(getApplicationContext());
+                //cancel current alarm
+                AlarmHelper.cancelAlarms(MainActivity.this);
+
+                //mark as done
+                ActionContentValues values = new ActionContentValues();
+                values.putReady(true);
+                ActionSelection where = new ActionSelection();
+                where.id(mCurrentActionId);
+                getContentResolver().update(ActionColumns.CONTENT_URI, values.values(), ActionColumns._ID + "=?", new String[]{""+mCurrentActionId});
+
+                //set next alarm
+                AlarmHelper.setNextAlarm(MainActivity.this);
+
+                //update views with the next action to be done
+                initView();
             }
         });
 
         mDoneOutOfTimeButton = (Button) findViewById(R.id.done_not_in_time_button);
+        mDoneOutOfTimeButton.setVisibility(View.GONE);
 
         boolean showIntro = initView();
 
+        //Configure ads
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+        if (BuildConfig.DEBUG) {
+            builder.addTestDevice("2D1E30DEA7AA3061A274961A5B80AF92");
+        }
+        AdRequest adRequest = builder.build();
+        mAdView.loadAd(adRequest);
+
+        //get some analytics
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+
+        //Show intro screen if needed
         if (showIntro) {
             startActivityForResult(IntroActivity.newIntent(this), REQ_GET_TIME_DATE);
         }
@@ -88,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean initView() {
         ActionSelection where = new ActionSelection();
         where.orderByDate(false);
-        where.dateAfter(new Date());
+        where.ready(false);
         Cursor c = getContentResolver().query(ActionColumns.CONTENT_URI, null,
                 where.sel(), where.args(), where.order());
 
@@ -99,15 +131,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cursor.moveToFirst();
-
+        mCurrentActionId = cursor.getId();
         mActionText.setText(cursor.getAction().equals(actionKind.PUT)?R.string.next_action_remove:R.string.next_action_take);
-
         Date actionDate = cursor.getDate();
         RelativeDateFormat relFormat = new RelativeDateFormat(this, NaturalDateFormat.DAYS);
         mTimeText.setText(relFormat.format(actionDate.getTime()));
 
-        //mTimeText.setText(DateUtils.getRelativeTimeSpanString(actionDate.getTime(), System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS));
+        //show done button if we are in the current day
+        mDoneInTimeButton.setVisibility(actionDate.before(new Date(System.currentTimeMillis() + ONE_DAY))?View.VISIBLE:View.GONE);
 
+        //mTimeText.setText(DateUtils.getRelativeTimeSpanString(actionDate.getTime(), System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS));
 
         //fill calendar data
         List<CalendarDayEvent> events = new ArrayList<CalendarDayEvent>();
@@ -118,17 +151,6 @@ public class MainActivity extends AppCompatActivity {
         }
         mCalendar.getCalendarView().addEvents(events);
         cursor.close();
-
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-        if (BuildConfig.DEBUG) {
-            builder.addTestDevice("2D1E30DEA7AA3061A274961A5B80AF92");
-        }
-        AdRequest adRequest = builder.build();
-        mAdView.loadAd(adRequest);
-
-        Bundle bundle = new Bundle();
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
 
         return false;
     }

@@ -143,4 +143,19 @@ public class ActionSelection extends AbstractSelection<ActionSelection> {
         orderBy(ActionColumns.DATE, false);
         return this;
     }
+
+    public ActionSelection ready(boolean value) {
+        addEquals(ActionColumns.READY, toObjectArray(value));
+        return this;
+    }
+
+    public ActionSelection orderByReady(boolean desc) {
+        orderBy(ActionColumns.READY, desc);
+        return this;
+    }
+
+    public ActionSelection orderByReady() {
+        orderBy(ActionColumns.READY, false);
+        return this;
+    }
 }

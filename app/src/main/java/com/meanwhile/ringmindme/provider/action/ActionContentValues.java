@@ -60,4 +60,13 @@ public class ActionContentValues extends AbstractContentValues {
         mContentValues.put(ActionColumns.DATE, value);
         return this;
     }
+
+    /**
+     * If the action has been already performed
+     */
+    public ActionContentValues putReady(boolean value) {
+        mContentValues.put(ActionColumns.READY, value);
+        return this;
+    }
+
 }

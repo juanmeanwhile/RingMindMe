@@ -26,8 +26,12 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             + ActionColumns.TABLE_NAME + " ( "
             + ActionColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ActionColumns.ACTION + " INTEGER NOT NULL, "
-            + ActionColumns.DATE + " INTEGER NOT NULL "
+            + ActionColumns.DATE + " INTEGER NOT NULL, "
+            + ActionColumns.READY + " INTEGER NOT NULL "
             + " );";
+
+    public static final String SQL_CREATE_INDEX_ACTION_READY = "CREATE INDEX IDX_ACTION_READY "
+            + " ON " + ActionColumns.TABLE_NAME + " ( " + ActionColumns.READY + " );";
 
     // @formatter:on
 
@@ -84,6 +88,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         mOpenHelperCallbacks.onPreCreate(mContext, db);
         db.execSQL(SQL_CREATE_TABLE_ACTION);
+        db.execSQL(SQL_CREATE_INDEX_ACTION_READY);
         mOpenHelperCallbacks.onPostCreate(mContext, db);
     }
 

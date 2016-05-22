@@ -49,4 +49,14 @@ public class ActionCursor extends AbstractCursor implements ActionModel {
             throw new NullPointerException("The value of 'date' in the database was null, which is not allowed according to the model definition");
         return res;
     }
+
+    /**
+     * If the action has been already performed
+     */
+    public boolean getReady() {
+        Boolean res = getBooleanOrNull(ActionColumns.READY);
+        if (res == null)
+            throw new NullPointerException("The value of 'ready' in the database was null, which is not allowed according to the model definition");
+        return res;
+    }
 }

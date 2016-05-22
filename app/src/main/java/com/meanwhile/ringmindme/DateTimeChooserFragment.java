@@ -126,6 +126,10 @@ public class DateTimeChooserFragment extends Fragment {
         return v;
     }
 
+    public void updateRingQuestion(boolean inside) {
+        mQuestion.setText(inside?R.string.datetime_picker_ring_put: R.string.datetime_picker_ring_take_out);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

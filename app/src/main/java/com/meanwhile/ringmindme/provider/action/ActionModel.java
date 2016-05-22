@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
- * An action to be performed by th euser
+ * An action to be performed by the user
  */
 public interface ActionModel extends BaseModel {
 
@@ -25,4 +25,9 @@ public interface ActionModel extends BaseModel {
      */
     @NonNull
     Date getDate();
+
+    /**
+     * If the action has been already performed
+     */
+    boolean getReady();
 }

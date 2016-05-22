@@ -30,9 +30,10 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
     private InkPageIndicator mIndicator;
     private ViewPager mPager;
     private FloatingActionButton mNextButton;
+    private IntroPagerAdapter mAdapter;
 
     private boolean mNeedToGoToLast = true;
-    private boolean mRingInside;
+    private Boolean mRingInside;
     private Date mSelectedDate;
 
 
@@ -46,7 +47,8 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
         setContentView(R.layout.activity_intro);
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new IntroPagerAdapter(false, getSupportFragmentManager()));
+        mAdapter = new IntroPagerAdapter(false, getSupportFragmentManager());
+        mPager.setAdapter(mAdapter);
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -103,6 +105,7 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
             ActionContentValues values = new ActionContentValues();
             values.putAction(take?actionKind.TAKE:actionKind.PUT);
             values.putDate(cal.getTime());
+            values.putReady(false);
             getContentResolver().insert(ActionColumns.CONTENT_URI, values.values());
 
             take = !take;
@@ -113,7 +116,6 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
         }
 
         AlarmHelper.setAlarm(this, firstAlarm);
-
 
         //finish activity
         //ge got what we need, return date as result and finish
@@ -132,11 +134,12 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
 
     @Override
     public void onSelectionMade(boolean ringInside) {
-        mRingInside = ringInside;
         mNeedToGoToLast = true;
+        mRingInside = ringInside;
 
         //turn FAB into next state
         toogleFab(false);
+        mAdapter.setRingInside(ringInside);
     }
 
     private void toogleFab(boolean finishMode) {
@@ -145,6 +148,7 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
 
 
     private class IntroPagerAdapter extends FragmentPagerAdapter {
+        DateTimeChooserFragment mDateFragment;
         public IntroPagerAdapter(boolean ringIn, FragmentManager fm) {
             super(fm);
             this.ringIn = ringIn;
@@ -154,7 +158,9 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
 
         public void setRingInside(boolean ringInside) {
             ringIn = ringInside;
-            notifyDataSetChanged();
+             if (mDateFragment != null) {
+                 mDateFragment.updateRingQuestion(ringIn);
+             }
         }
 
         @Override
@@ -165,14 +171,14 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
                 case 1:
                     return new ChooserFragment();
                 default:
-                    return DateTimeChooserFragment.newInstance(ringIn);
+                    mDateFragment=  DateTimeChooserFragment.newInstance(ringIn);
+                    return mDateFragment;
             }
         }
 
         @Override
         public int getItemPosition(Object object) {
             if (object instanceof DateTimeChooserFragment) {
-                //recreate fragment with the new value
                 return POSITION_NONE;
             }
             return super.getItemPosition(object);

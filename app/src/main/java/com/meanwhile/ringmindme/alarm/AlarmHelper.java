@@ -25,7 +25,7 @@ public class AlarmHelper {
         //get next alarm to be set
         ActionSelection where = new ActionSelection();
         where.orderByDate(false);
-        where.dateAfter(new Date());
+        where.ready(false);
         Cursor c = context.getContentResolver().query(ActionColumns.CONTENT_URI, null,
                 where.sel(), where.args(), where.order());
 

@@ -140,7 +140,7 @@ public abstract class BaseContentProvider extends ContentProvider {
         String[] res = new String[projection.length];
         for (int i = 0; i < projection.length; i++) {
             if (projection[i].equals(idColumn)) {
-                res[i] = tableName + "." + idColumn + " AS " + BaseColumns._ID;
+                res[i] = tableName + "build/intermediates/exploded-aar/com.pacioianu.david/ink-page-indicator/1.1.1/res" + idColumn + " AS " + BaseColumns._ID;
             } else {
                 res[i] = projection[i];
             }

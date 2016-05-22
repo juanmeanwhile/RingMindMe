@@ -10,12 +10,12 @@
     <string name="switch_inout_yes">Yes</string>
     <string name="switch_inout_no">No</string>
     <string name="hour_format">%1$.2:%2$.2d</string>
-    <string name="datetime_picker_ring_put">When did you put the ring in?</string>
-    <string name="datetime_picker_ring_take_out">When did you take the ring out?</string>
+    <string name="datetime_picker_ring_put">When did you put the ring?</string>
+    <string name="datetime_picker_ring_take_out">When did you take the ring?</string>
     <string name="next_action_remove">Remove the ring in</string>
     <string name="next_action_take">Take the ring in</string>
     <string name="notif_title">Ring ring!</string>
-    <string name="notif_body">Remind that there is something to do wit the ring soon. Tap to see</string>
+    <string name="notif_body">Something to do with the ring. Tap to see</string>
     <string name="done_in_time">Done in time</string>
     <string name="done_out_of_time">At different time</string>
     <string name="title_activity_settings">Settings</string>
