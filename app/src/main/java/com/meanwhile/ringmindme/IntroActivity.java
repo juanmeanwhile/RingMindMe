@@ -1,8 +1,5 @@
 package com.meanwhile.ringmindme;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.meanwhile.ringmindme.alarm.AlarmHelper;
 import com.meanwhile.ringmindme.provider.action.ActionColumns;
 import com.meanwhile.ringmindme.provider.action.ActionContentValues;
 import com.meanwhile.ringmindme.provider.action.actionKind;
@@ -27,6 +25,8 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
 
     private static final String RET_SELECTED_TIMEDATE = "selectedDate";
     private static final String TAG = "IntroActivity";
+    private static final int DAYS_TO_PUT = 7;
+    private static final int DAYS_TO_TAKE = 21;
     private InkPageIndicator mIndicator;
     private ViewPager mPager;
     private FloatingActionButton mNextButton;
@@ -93,26 +93,26 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
         cal.setTime(mSelectedDate);
         cal.getTime();
 
-        long firstAlarm = 0;
+        Date firstAlarm = null;
 
         //init db
         Log.d(TAG, "inserting entries in the database");
         for (int i = 0; i < 20 ; i++) {
 
-            cal.add(Calendar.DAY_OF_YEAR, take?3:20);
+            cal.add(Calendar.DAY_OF_YEAR, take?DAYS_TO_TAKE:DAYS_TO_PUT);
             ActionContentValues values = new ActionContentValues();
-            values.putAction(take?actionKind.TAKE:actionKind.REMOVE);
+            values.putAction(take?actionKind.TAKE:actionKind.PUT);
             values.putDate(cal.getTime());
             getContentResolver().insert(ActionColumns.CONTENT_URI, values.values());
 
             take = !take;
 
             if (i == 0) {
-                firstAlarm = cal.getTimeInMillis();
+                firstAlarm = cal.getTime();
             }
         }
 
-
+        AlarmHelper.setAlarm(this, firstAlarm);
 
 
         //finish activity

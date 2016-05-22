@@ -1,25 +1,30 @@
-package com.meanwhile.ringmindme.alarm;
+package com.meanwhile.ringmindme;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
+
 import com.meanwhile.ringmindme.MainActivity;
 import com.meanwhile.ringmindme.R;
 
 
 
-public class AlarmReceiver extends WakefulBroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "AlarmReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "Alarm received");
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_panorama_fish_eye_white_24dp)

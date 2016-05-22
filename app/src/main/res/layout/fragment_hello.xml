@@ -8,17 +8,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="24dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello"/>
+            android:layout_gravity="center_horizontal"
+            android:text="@string/hello"
+            android:textSize="80sp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/intro_header"
+            />
 
-        <TextView
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/intro_text"/>
+            card_view:cardBackgroundColor="@color/intro_card_bk"
+            card_view:cardCornerRadius="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/intro_text"
+                style="@style/IntroText"/>
+
+        </android.support.v7.widget.CardView>
+
+
 
 
     </LinearLayout>

@@ -103,6 +103,25 @@ public class DateTimeChooserFragment extends Fragment {
 
         mCalendarView = (CompactCalendarView) v.findViewById(R.id.cal);
         mCalendarView.setCurrentDate(mSelectedCal.getTime());
+        mCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            @Override
+            public void onDayClick(Date dateClicked) {
+                int min = mSelectedCal.get(Calendar.MINUTE);
+                int hour = mSelectedCal.get(Calendar.HOUR);
+
+                mSelectedCal.setTime(dateClicked);
+                mSelectedCal.set(Calendar.MINUTE, min);
+                mSelectedCal.set(Calendar.HOUR, hour);
+
+                mListener.onDateTimeSelected(mSelectedCal.getTime());
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+
+            }
+        });
+
 
         return v;
     }

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#46cdcf</color>
+    <color name="colorPrimaryDark">#3caeb0</color>
+    <color name="colorAccent">#E95451</color>
+    <color name="intro_header">#3884f6</color>
+    <color name="intro_card_bk">#46cdcf</color>
+    <color name="intro_text">#1c5657</color>
+    <color name="calendar_text">#1c5657</color>
+    <color name="action_remove">#E95451</color>
+    <color name="action_put">#3caeb0</color>
 </resources>
