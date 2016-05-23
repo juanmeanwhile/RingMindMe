@@ -2,7 +2,9 @@ package com.meanwhile.ringmindme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -27,6 +29,7 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
     private static final String TAG = "IntroActivity";
     private static final int DAYS_TO_PUT = 7;
     private static final int DAYS_TO_TAKE = 21;
+    private static final String INITIALIZED = "com.meanwhile.ringmind.initialized";
     private InkPageIndicator mIndicator;
     private ViewPager mPager;
     private FloatingActionButton mNextButton;
@@ -45,6 +48,11 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(INITIALIZED, false)) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mAdapter = new IntroPagerAdapter(false, getSupportFragmentManager());
@@ -115,13 +123,14 @@ public class IntroActivity extends AppCompatActivity implements DateTimeChooserF
             }
         }
 
+        //set first alarm
         AlarmHelper.setAlarm(this, firstAlarm);
 
-        //finish activity
-        //ge got what we need, return date as result and finish
-        Intent intent = new Intent();
-        intent.putExtra(RET_SELECTED_TIMEDATE, mSelectedDate);
-        setResult(RESULT_OK, intent);
+        //Don't show intro again
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(INITIALIZED, true).commit();
+
+        //launch Main Activity
+        startActivity(new Intent(this, MainActivity.class), ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
         finish();
     }
 

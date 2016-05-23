@@ -1,6 +1,7 @@
 package com.meanwhile.ringmindme;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.meanwhile.ringmindme.ui.CalendarView;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -32,7 +34,7 @@ public class DateTimeChooserFragment extends Fragment {
 
     private static final String ARG_RING_INSIDE = "RingInside";
     private OnDateTimeFragmentListener mListener;
-    private CompactCalendarView mCalendarView;
+    private CalendarView mCalendarView;
     private Button mTimeButton;
     private Calendar mSelectedCal;
     private TextView mQuestion;
@@ -101,11 +103,13 @@ public class DateTimeChooserFragment extends Fragment {
             }
         });
 
-        mCalendarView = (CompactCalendarView) v.findViewById(R.id.cal);
-        mCalendarView.setCurrentDate(mSelectedCal.getTime());
-        mCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+        mCalendarView = (CalendarView) v.findViewById(R.id.cal);
+        mCalendarView.getCalendarView().setCurrentDate(mSelectedCal.getTime());
+        mCalendarView.getCalendarView().setCurrentSelectedDayBackgroundColor(Color.WHITE);
+        mCalendarView.getCalendarView().setCurrentDayBackgroundColor(getResources().getColor(R.color.intro_card_bk));
+        mCalendarView.setListener(new CalendarView.OnDaySelectedListener() {
             @Override
-            public void onDayClick(Date dateClicked) {
+            public void onDaySelected(Date dateClicked) {
                 int min = mSelectedCal.get(Calendar.MINUTE);
                 int hour = mSelectedCal.get(Calendar.HOUR);
 
@@ -115,13 +119,7 @@ public class DateTimeChooserFragment extends Fragment {
 
                 mListener.onDateTimeSelected(mSelectedCal.getTime());
             }
-
-            @Override
-            public void onMonthScroll(Date firstDayOfNewMonth) {
-
-            }
         });
-
 
         return v;
     }

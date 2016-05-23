@@ -1,4 +1,4 @@
-package com.meanwhile.ringmindme.widget;
+package com.meanwhile.ringmindme.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -14,7 +14,6 @@ import com.meanwhile.ringmindme.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.SimpleTimeZone;
 
 /**
  * Created by Juan on 22/05/2016.

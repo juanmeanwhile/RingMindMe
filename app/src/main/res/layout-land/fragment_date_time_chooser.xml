@@ -1,0 +1,99 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            tools:context="com.meanwhile.ringmindme.DateTimeChooserFragment">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        card_view:cardBackgroundColor="@color/intro_card_bk"
+        card_view:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/IntroText"/>
+
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    app:layout_widthPercent="50%"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/datetime_picker_time_hint"
+                        style="@style/IntroText"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif-condensed"
+                        android:layout_marginTop="8dp"/>
+
+                    <Button
+                        android:id="@+id/time_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#fff"
+                        android:padding="16dp"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:layout_widthPercent="50%"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/datetime_picker_date_hint"
+                        style="@style/IntroText"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif-condensed"/>
+
+                    <com.meanwhile.ringmindme.ui.CalendarView
+                        android:id="@+id/cal"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="bottom"
+                        app:compactCalendarBackgroundColor="@color/intro_card_bk"
+                        app:compactCalendarCurrentDayBackgroundColor="@color/colorPrimary"
+                        app:compactCalendarCurrentSelectedDayBackgroundColor="#fff"
+                        app:compactCalendarTextColor="@color/calendar_text"
+                        app:compactCalendarTextSize="12sp"
+                        />
+
+                </LinearLayout>
+            </android.support.percent.PercentRelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

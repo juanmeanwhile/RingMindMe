@@ -1,9 +1,5 @@
 Things to finish:
 
-Change db to mark actions as done
-Horizontal
-Widget
 include keystore
-Loader
-¿AsyncTask?
+AsyncTask?
 Move to Capstone repo

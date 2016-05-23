@@ -12,8 +12,8 @@
     <string name="hour_format">%1$.2:%2$.2d</string>
     <string name="datetime_picker_ring_put">When did you put the ring?</string>
     <string name="datetime_picker_ring_take_out">When did you take the ring?</string>
-    <string name="next_action_remove">Remove the ring in</string>
-    <string name="next_action_take">Take the ring in</string>
+    <string name="next_action_put">Put in the ring</string>
+    <string name="next_action_take">Take the ring out</string>
     <string name="notif_title">Ring ring!</string>
     <string name="notif_body">Something to do with the ring. Tap to see</string>
     <string name="done_in_time">Done in time</string>
@@ -117,6 +117,7 @@
     <string name="action_settings">Settings</string>
     <string name="datetime_picker_time_hint">Hour</string>
     <string name="datetime_picker_date_hint">Day</string>
+    <string name="widget_empty">Enter Ringming app</string>
 
 
 </resources>

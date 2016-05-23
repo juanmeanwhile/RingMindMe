@@ -53,58 +53,15 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-condensed"/>
 
-            <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            <com.meanwhile.ringmindme.ui.CalendarView
                 android:id="@+id/cal"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_gravity="bottom"
-                app:compactCalendarBackgroundColor="@color/intro_card_bk"
-                app:compactCalendarCurrentDayBackgroundColor="@color/colorPrimary"
-                app:compactCalendarCurrentSelectedDayBackgroundColor="#fff"
-                app:compactCalendarTextColor="@color/calendar_text"
-                app:compactCalendarTextSize="12sp"
                 />
 
         </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
-    <!--<FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_heightPercent="50%">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/IntroText"/>
-
-            <Button
-                android:id="@+id/time_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-    </FrameLayout>-->
-
-
-
-    <!--<CalendarView-->
-        <!--android:id="@+id/cal"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--app:compactCalendarBackgroundColor="#ffe95451"-->
-        <!--app:compactCalendarCurrentDayBackgroundColor="#B71C1C"-->
-        <!--app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"-->
-        <!--app:compactCalendarTextColor="#fff"-->
-        <!--app:compactCalendarTextSize="12sp"-->
-        <!--app:layout_heightPercent="50%"-->
-        <!--/>-->
 
 </android.support.percent.PercentFrameLayout>
