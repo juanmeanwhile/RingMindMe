@@ -199,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //show done button if we are in the current day
         mDoneInTimeButton.setVisibility(actionDate.before(new Date(System.currentTimeMillis() + ONE_DAY))?View.VISIBLE:View.GONE);
-        //mDoneInTimeButton.setVisibility(View.VISIBLE);
 
         //fill calendar data
         List<CalendarDayEvent> events = new ArrayList<CalendarDayEvent>();
